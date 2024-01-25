@@ -1,24 +1,60 @@
-# README
+## usersテーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column          | Type   | Options                |
+| --------------- | ------ | ---------------------- |
+| nickname        | string | null:false,unique:true |
+| email           | string | null:false,unique:true |
+| password        | string | null:false             |
+| last_name       | string | null:false             |
+| first_name      | string | null:false             |
+| last_name_kana  | string | null:false             |
+| first_name_kana | string | null:false             |
+| birthday        | date   | null:false             |
 
-Things you may want to cover:
+### Association
+has_many :items
+has_many :orders
 
-* Ruby version
+## itemsテーブル
 
-* System dependencies
+| Column           | Type       | Options                     |
+| ---------------- | ---------- | --------------------------- |
+| user             | references | null:false,foreign_key:true |
+| name             | string     | null:false                  |
+| description      | text       | null:false                  |
+| category         | string     | null:false                  | 
+| item_status      | string     | null:false                  |
+| shipping_charges | string     | null:false                  |
+| region           | string     | null:false                  |
+| shipping-date    | date       | null:false                  | 
+| price            | integer    | null:false                  |
 
-* Configuration
+### Association
+belongs_to :user
+has_one :order
 
-* Database creation
+## ordersテーブル
 
-* Database initialization
+| Column | Type       | Options                     |
+| ------ | ---------- | --------------------------- |
+| user   | references | null:false,foreign_key:true |
+| item   | references | null:false,foreign_key:true |
 
-* How to run the test suite
+### Association
+belongs_to :user
+belongs_to :item
+has_one :payments
 
-* Services (job queues, cache servers, search engines, etc.)
+## paymentsテーブル
+| Column          | Type   | Options                |
+| --------------- | ------ | ---------------------- |
+| orders          | references | null:false, foreign_key:true |
+| postcode        | string     | null:false |
+| city            | string     | null:false |
+| block           | string     | null:false |
+| building        | string     |            |
+| phone_number    | string     | null:false |
 
-* Deployment instructions
+### Association
+belongs_to :order
 
-* ...
