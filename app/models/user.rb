@@ -2,7 +2,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   KATAKANA_REGEXP = /\A[\p{katakana}\u{30fc}]+\z/
-  ZENKAKU = /\A[ぁ-んァ-ン一-龥]/
+  ZENKAKU = /\A[ぁ-んァ-ヶ一-龥々ー]+\z/
   validates :nickname, presence: true
   validates :last_name, presence: true, format: { with: ZENKAKU }
   validates :first_name, presence: true, format: { with: ZENKAKU }
