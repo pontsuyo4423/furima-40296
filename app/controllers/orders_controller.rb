@@ -2,14 +2,16 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
+    @order_payment = OrderPayment.new
   end
 
   def create
-    @order = Order.new(order_params)
-    if @order.save
+    @order_payment = OrderPayment.new(order_payment_params)
+    if @order_payment.valid? 
+      @order_payment.save
       redirect_to root_path
     else
-      render :index
+      render :index, status: :unprocessable_entity
     end
   end
 
@@ -19,7 +21,7 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  def order_params
-    params.require(:order).permit(:postcode, :city, :block, :building, :phone_number).merge(item_id: @item.id)
+  def order_payment_params
+    params.require(:order_payment).permit(:postcode, :prefecture_id, :city, :block, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 end
