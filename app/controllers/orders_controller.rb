@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
   before_action :authenticate_user!
+  before_action :redirect_if_own_item_or_sold, only: [:index]
   def index
     @order_payment = OrderPayment.new
   end
@@ -26,6 +27,10 @@ class OrdersController < ApplicationController
     params.require(:order_payment).permit(:postcode, :prefecture_id, :city, :block, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])
   end
 
+  def redirect_if_own_item_or_sold
+    redirect_to root_path if current_user.id == @item.user_id || @item.order.present?
+  end
+  
   def pay_item
     Payjp.api_key = "sk_test_f31cc8fec5fd5deeb787fe9e" 
       Payjp::Charge.create(
