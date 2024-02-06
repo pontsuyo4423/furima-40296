@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe OrderPayment, type: :model do
-  before do
-    @order_payment = FactoryBot.build(:order_payment)
-  end
-
   describe '商品購入' do
+    before do
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item, user: user)
+      @order_payment = FactoryBot.build(:order_payment, user_id: user.id, item_id: item.id)
+    end
+
     context '商品購入できる時' do
       it '全ての項目が正しく入力されていれば、購入できる。' do
         expect(@order_payment).to be_valid
