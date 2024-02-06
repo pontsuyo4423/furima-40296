@@ -39,7 +39,7 @@ RSpec.describe OrderPayment, type: :model do
       it '郵便番号にハイフンがないと登録できない。' do
         @order_payment.postcode = '1111111'
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Postcode is invalid. Include hyphen(-)")
+        expect(@order_payment.errors.full_messages).to include('Postcode is invalid. Include hyphen(-)')
       end
       it '都道府県が—-だと登録できない。' do
         @order_payment.prefecture_id = 1
@@ -64,22 +64,22 @@ RSpec.describe OrderPayment, type: :model do
       it '電話番号にハイフンがあると登録できない。' do
         @order_payment.phone_number = '000-0000-0000'
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Phone number is invalid")
+        expect(@order_payment.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が１２桁以上だと登録できない。' do
         @order_payment.phone_number = '000000000000'
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Phone number is invalid")
+        expect(@order_payment.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が9桁以下だと登録できない。' do
         @order_payment.phone_number = '000000000'
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Phone number is invalid")
+        expect(@order_payment.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が全角だと登録できない。' do
         @order_payment.phone_number = '０００００００００'
         @order_payment.valid?
-        expect(@order_payment.errors.full_messages).to include("Phone number is invalid")
+        expect(@order_payment.errors.full_messages).to include('Phone number is invalid')
       end
     end
   end
