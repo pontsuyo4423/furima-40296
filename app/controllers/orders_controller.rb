@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :redirect_if_own_item_or_sold, only: [:index]
   def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order_payment = OrderPayment.new
   end
 
