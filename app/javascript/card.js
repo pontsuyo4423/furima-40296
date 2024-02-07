@@ -6,20 +6,9 @@ const pay = () => {
   const expiryElement = elements.create('cardExpiry');
   const cvcElement = elements.create('cardCvc');
 
-   // number-formが存在する場合のみmountを実行
-   if (document.getElementById('number-form')) {
-    numberElement.mount('#number-form');
-  }
-
-  // expiry-formが存在する場合のみmountを実行
-  if (document.getElementById('expiry-form')) {
-    expiryElement.mount('#expiry-form');
-  }
-
-  // cvc-formが存在する場合のみmountを実行
-  if (document.getElementById('cvc-form')) {
-    cvcElement.mount('#cvc-form');
-  }
+  numberElement.mount('#number-form');
+  expiryElement.mount('#expiry-form');
+  cvcElement.mount('#cvc-form');
   const form = document.getElementById('charge-form')
   form.addEventListener("submit", (e) => {
     payjp.createToken(numberElement).then(function (response) {
@@ -39,5 +28,5 @@ const pay = () => {
   });
 };
 
-window.addEventListener("turbo:load", pay);
+window.addEventListener("load", pay);
 window.addEventListener("turbo:render", pay);
